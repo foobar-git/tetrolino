@@ -6,7 +6,7 @@ import { Optional } from '@angular/core';
 import { App } from '@capacitor/app';
 import { Gesture, GestureController } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
-import { ScreenOrientation } from '@capacitor/screen-orientation';
+//import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 
 @Component({
@@ -24,17 +24,17 @@ export class HomePage {
   handlerMessage = "";
 
   // Google AdMob variables
-  initializeGoogleAdmobAds = true;
+  initializeGoogleAdmobAds = false;
   isTesting = false;
   bannerAdId: string;
   bannerAdId_test = 'ca-app-pub-3940256099942544/6300978111';        // testing id
-  bannerAdId_real = 'ca-app-pub-4533910806110106/8803383242';          // real id
+  bannerAdId_real = '';          // real id
   interstitialAdId: string;
   interstitialAdId_test = 'ca-app-pub-3940256099942544/1033173712';  // testing id
-  interstitialAdId_real = 'ca-app-pub-4533910806110106/2471260257';    // real id
+  interstitialAdId_real = '';    // real id
   rewardAdId: string;
   rewardAdId_test = 'ca-app-pub-3940256099942544/5224354917';        // testing id
-  rewardAdId_real = 'ca-app-pub-4533910806110106/3146897732';          // real id
+  rewardAdId_real = '';          // real id
 
   // Tetrolino variables
   tetrolinoes: any;
@@ -194,7 +194,7 @@ export class HomePage {
     });
 
     // lock screen orientation
-    ScreenOrientation.lock({ orientation: 'portrait' });
+    //ScreenOrientation.lock({ orientation: 'portrait' });
 
     // Binding 'this' to input for keyboard
     this.getUserInput = this.getUserInput.bind(this);
@@ -259,7 +259,7 @@ export class HomePage {
 
   ngOnDestroy() {
     this.removeButtonListeners();
-    ScreenOrientation.unlock();
+    //ScreenOrientation.unlock();
   }
 
   /////////////////////////////////////////////////////////////////////////////////
