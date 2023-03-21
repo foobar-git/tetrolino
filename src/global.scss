@@ -24,3 +24,9 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+// Default (original) black theme
+:root {
+    --ion-background-color: black;
+    --ion-text-color: white;
+}

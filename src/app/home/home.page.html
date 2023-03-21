@@ -1,20 +1,75 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      <div id="top-text">
+        <h5 id="score">Score: <span id="score-number">0</span></h5><h5 id="title">Tetrolino</h5>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div id="swipe-area"></div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div id="game-screen">
+    <div id="game">
+
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large"><span id="title">Tetrolino</span></ion-title>
+        </ion-toolbar>
+      </ion-header>
+    
+      <div class="container">
+        <div class="grid">
+        </div>
+        <div>
+          <div id="drop-button">
+            <div class="preview-grid">
+            </div>
+          </div>
+          <div id="level">
+            <h5>Level</h5>
+            <h3 id="level-number">0</h3>
+          </div>
+          <div id="settings-button">
+            <ion-icon name="settings-outline" size="large"></ion-icon>
+          </div>
+          <div id="info-button">
+            <ion-icon name="information-circle-outline" size="large"></ion-icon>
+          </div>
+        </div>
+      </div>
+      
+      <div id="buttons-flex">
+        <div id="buttons1">
+          <ion-button id="start-pause-button">start | pause</ion-button>
+          <ion-button id="rotate-button"><ion-icon name="refresh-circle-outline" size="large"></ion-icon></ion-button>
+        </div>
+        <div id="buttons2">
+          <ion-button id="move-left-button"><ion-icon name="chevron-back-circle-outline" size="large"></ion-icon></ion-button>
+          <ion-button id="move-right-button"><ion-icon name="chevron-forward-circle-outline" size="large"></ion-icon></ion-button>
+          <ion-button id="move-down-button"><ion-icon name="chevron-down-circle-outline" size="large"></ion-icon></ion-button>
+        </div>
+      </div>
+
+      <!-- Testing -->
+      <!--div id="buttons">
+        <ion-button (click)="fnTest()">Tetrolino</ion-button>
+        <ion-button (click)="advanceLevel()">Next Level</ion-button>
+      </div-->
+
+      <!-- Testing Google Admob-->
+      <!--div id="buttons" style="margin-top: 10px;">
+        <ion-button (click)="showBannerAd(bannerAdId)">Show Banner</ion-button>
+        <ion-button (click)="hideBannerAd()">Hide Banner</ion-button>
+      </div>
+      <div id="buttons">
+        <ion-button (click)="showInterstitialAd()">Interstitial</ion-button>
+        <ion-button (click)="showRewardAd()">Reward Ad</ion-button>
+      </div-->
+
+    </div>
   </div>
+
 </ion-content>

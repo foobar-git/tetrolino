@@ -1,27 +1,159 @@
-#container {
-  text-align: center;
+ion-button {
+  text-transform: none;
+}
 
+.dark-theme {
+  --ion-text-color: white;
+  background-color: black;
+}
+
+.light-theme {
+  --ion-text-color: black;
+  background-color: gray;
+}
+
+#top-text {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+#title {
+  display: inline-block;
+}
+
+#score {
+  display: inline-block;
+}
+
+#score-number {
+  font-family: "Times New Roman", Times, serif;
+}
+
+#level {
+  margin-top: 100px;
+  margin-left: 16px;
+  text-align: center;
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+#level-number {
+  font-family: "Times New Roman", Times, serif;
+}
+
+#settings-button {
+  margin-top: 60px;
+  margin-left: 16px;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+}
+
+#info-button {
+  margin-top: 60px;
+  margin-left: 16px;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+}
+
+#game-screen {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  margin-left: 22px;
+}
+
+.grid {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 204px;
+  height: 404px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: black;
+  border: 2px solid darkgray;
+  outline: lightgray solid 2px;
+}
+
+.preview-grid {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: transparent;
+}
+
+#drop-button {
+  z-index: 100;
   position: absolute;
+}
+
+#buttons-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+#start-pause-button {
+  font-family: "Lucida Console", "Courier New", monospace;
+  --background: transparent;
+  width: 50%;
+  height: 35px;
+  margin-top: 5%;
+}
+
+#rotate-button {
+  font-family: "Lucida Console", "Courier New", monospace;
+  --background: transparent;
+  width: 40%;
+  height: 60px;
+}
+
+#move-down-button {
+  margin-left: 30px;
+}
+
+#move-left-button, #move-right-button, #move-down-button {
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-variant: small-caps;
+  width: 28%;
+  height: 60px;
+  --background: transparent;
+}
+
+#buttons1 {
+  display: flex;
+  z-index: 100;
+  justify-content: space-between;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+#buttons2 {
+  display: flex;
+  z-index: 100;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 40px;
+}
+
+.buttons {
+  display: flex;
+  z-index: 100;
+}
+
+#swipe-area {
+  position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+  bottom: 0;
+  z-index: 90;
 }
