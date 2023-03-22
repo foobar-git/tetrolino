@@ -792,7 +792,8 @@ export class HomePage {
   }
 
   restartGame() {
-    window.location.reload();
+    //window.location.reload();
+    window.location.href = '/games/tetrolino/index.html';
   }
 
   newGame() {
