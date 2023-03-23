@@ -1021,7 +1021,7 @@ export class HomePage {
 
   // INTERSTITIAL AD
   async showInterstitialAd() {
-    if (this.initializeGoogleAdmobAds) await AdMob.showInterstitial();
+    await AdMob.showInterstitial();
   }
 
   async prepareInterstitialAd(adId) {
@@ -1034,17 +1034,31 @@ export class HomePage {
 
   // REWARDED VIDEO AD
   async showRewardAd() {
-    if (this.initializeGoogleAdmobAds) {
-      AdMob.addListener(
-        RewardAdPluginEvents.Rewarded,
-        (reward: AdMobRewardItem) => {
-          // Give the reward
-          console.log('Reward: ', reward);
-          this.restartGame();
-        }
-      );
-      await AdMob.showRewardVideoAd();
-    }
+    AdMob.addListener(
+      RewardAdPluginEvents.Rewarded,
+      (reward: AdMobRewardItem) => {
+        // Give the reward
+        console.log('Reward: ', reward);
+        this.restartGame();
+      }
+    );
+    AdMob.addListener(
+      RewardAdPluginEvents.FailedToLoad,
+      (info) => {
+        console.log('Reward ad failed to load: ', info);
+        this.titleDisplay.innerHTML = info;
+        this.restartGame();
+      }
+    );
+    AdMob.addListener(
+      RewardAdPluginEvents.FailedToShow,
+      (info) => {
+        console.log('Reward ad failed to show: ', info);
+        this.titleDisplay.innerHTML = info;
+        this.restartGame();
+      }
+    );
+    await AdMob.showRewardVideoAd();
   }
 
   async prepareRewardAd(adId) {
@@ -1053,7 +1067,15 @@ export class HomePage {
       isTesting: this.isTesting
       //ssv: { ... }
     };
-    await AdMob.prepareRewardVideoAd(options);
+    await AdMob.prepareRewardVideoAd(options)
+      .then(() => {
+        //console.log('Reward video ad is ready');
+        // Show the ad
+        //AdMob.showRewardVideoAd();
+      })
+      .catch((error) => {
+        console.error('Failed to prepare reward video ad:', error);
+      });
   }
 
   /////////////////////////////////////////////////////////////////////////////////
