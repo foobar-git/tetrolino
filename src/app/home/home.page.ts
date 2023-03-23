@@ -28,13 +28,13 @@ export class HomePage {
   isTesting = false;
   bannerAdId: string;
   bannerAdId_test = 'ca-app-pub-3940256099942544/6300978111';        // testing id
-  bannerAdId_real = 'ca-app-pub-4533910806110106/8803383242';          // real id
+  bannerAdId_real = 'ca-app-pub-4533910806110106/8216822164';          // real id
   interstitialAdId: string;
   interstitialAdId_test = 'ca-app-pub-3940256099942544/1033173712';  // testing id
-  interstitialAdId_real = 'ca-app-pub-4533910806110106/2471260257';    // real id
+  interstitialAdId_real = 'ca-app-pub-4533910806110106/7826225333';    // real id
   rewardAdId: string;
   rewardAdId_test = 'ca-app-pub-3940256099942544/5224354917';        // testing id
-  rewardAdId_real = 'ca-app-pub-4533910806110106/3146897732';          // real id
+  rewardAdId_real = 'ca-app-pub-4533910806110106/9197649776';          // real id
 
   // Tetrolino variables
   tetrolinoes: any;
