@@ -106,6 +106,7 @@ export class HomePage {
   tetrolinoMusic = 'assets/audio/tetrolino.mp3';
   soundEffect: HTMLAudioElement;
   solidifyAudio = 'assets/audio/solidify.mp3';
+  soundEffect_clearLine: HTMLAudioElement;
   clearLineAudio = 'assets/audio/clearLine.mp3';
   tetrolinoSpecialMoveAudio = 'assets/audio/tetrolinoSpecialMove.mp3';
   voice: HTMLAudioElement;
@@ -223,6 +224,10 @@ export class HomePage {
     this.tetrolinoes = this.initTetrolinos(this.width_squareGrid);
     this.previewTetrolinos = this.initTetrolinos(this.width_squarePreviewGrid);
     this.linesToNextLevel = this.everyNumberOfLines;
+
+    // randomize tetrolinos
+    this.shuffle(this.tetrolinoes, this.previewTetrolinos);
+    this.shuffle(this.tetrolinoes, this.previewTetrolinos);
     
     // init ui
     this.previewGrid = document.querySelector('.preview-grid');
@@ -317,8 +322,8 @@ export class HomePage {
         [0 * width + 1, 1 * width + 1, 2 * width + 1, 3 * width + 1],
         [1 * width + 0, 1 * width + 1, 1 * width + 2, 1 * width + 3]
     ];
-
-    return [z_tetrolino, l_tetrolino, t_tetrolino, s_tetrolino, j_tetrolino, i_tetrolino, o_tetrolino,];
+    
+    return [j_tetrolino, l_tetrolino, s_tetrolino, z_tetrolino, t_tetrolino, o_tetrolino, i_tetrolino];
   }
 
   setUpPreviewGrid(wp) {  // set up the preview grid (next tetrolino box)
@@ -423,6 +428,17 @@ export class HomePage {
     };
   }
 
+  shuffle(t: any, pt: any) {
+    // Randomize the first array (using Fisher-Yates shuffle)
+    for (let i = t.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [t[i], t[j]] = [t[j], t[i]];
+      [pt[i], pt[j]] = [pt[j], pt[i]]; // apply the same randomization to pt
+    }
+    this.tetrolinoes = t;
+    this.previewTetrolinos = pt;
+  }
+
   selectRandomTetrolino() {
     // randomly select a new color
     this.randomColor = this.nextRandomColor;
@@ -465,8 +481,8 @@ export class HomePage {
       if (row.every(index => this.squares_grid[index].classList.contains('solid'))) {
         this.specialTetrolinoMoveCounter++;   // count toward special tetrolino move
 
-        this.soundEffect = this.setAudio(this.clearLineAudio, 0.20);
-        this.soundEffect.play();
+        this.soundEffect_clearLine = this.setAudio(this.clearLineAudio, 0.20);
+        this.soundEffect_clearLine.play();
         this.linesCleared++;
         this.score += 10 + this.moveDownBonus;
         this.scoreDisplay.innerHTML = this.score;
