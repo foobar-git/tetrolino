@@ -17,8 +17,8 @@ import { ScreenOrientation } from '@capacitor/screen-orientation';
 export class HomePage {
   // theme variables
   toggleTheme = false;
-  toggleTheme_LIGHT = 'Set Light Theme';
-  toggleTheme_DARK = 'Set Dark Theme';
+  toggleThemeString_LIGHT = 'Set Light Theme';
+  toggleThemeString_DARK = 'Set Dark Theme';
 
   // alert handler message
   handlerMessage = "";
@@ -26,6 +26,8 @@ export class HomePage {
   // Google AdMob variables
   initializeGoogleAdmobAds = true;
   isTesting = false;
+  toggleBannerAdString = 'Toggle Banner';
+  toggleBannerAd = false;
   bannerAdId: string;
   bannerAdId_test = 'ca-app-pub-3940256099942544/6300978111';        // testing id
   bannerAdId_real = 'ca-app-pub-4533910806110106/8216822164';          // real id
@@ -106,6 +108,7 @@ export class HomePage {
   tetrolinoMusic = 'assets/audio/tetrolino.mp3';
   soundEffect: HTMLAudioElement;
   solidifyAudio = 'assets/audio/solidify.mp3';
+  soundEffect_clearLine: HTMLAudioElement;
   clearLineAudio = 'assets/audio/clearLine.mp3';
   tetrolinoSpecialMoveAudio = 'assets/audio/tetrolinoSpecialMove.mp3';
   voice: HTMLAudioElement;
@@ -223,6 +226,10 @@ export class HomePage {
     this.tetrolinoes = this.initTetrolinos(this.width_squareGrid);
     this.previewTetrolinos = this.initTetrolinos(this.width_squarePreviewGrid);
     this.linesToNextLevel = this.everyNumberOfLines;
+
+    // randomize tetrolinos
+    this.shuffle(this.tetrolinoes, this.previewTetrolinos);
+    this.shuffle(this.tetrolinoes, this.previewTetrolinos);
     
     // init ui
     this.previewGrid = document.querySelector('.preview-grid');
@@ -318,7 +325,7 @@ export class HomePage {
         [1 * width + 0, 1 * width + 1, 1 * width + 2, 1 * width + 3]
     ];
 
-    return [z_tetrolino, l_tetrolino, t_tetrolino, s_tetrolino, j_tetrolino, i_tetrolino, o_tetrolino,];
+    return [j_tetrolino, l_tetrolino, s_tetrolino, z_tetrolino, t_tetrolino, o_tetrolino, i_tetrolino];
   }
 
   setUpPreviewGrid(wp) {  // set up the preview grid (next tetrolino box)
@@ -423,6 +430,17 @@ export class HomePage {
     };
   }
 
+  shuffle(t: any, pt: any) {
+    // Randomize the first array (using Fisher-Yates shuffle)
+    for (let i = t.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [t[i], t[j]] = [t[j], t[i]];
+      [pt[i], pt[j]] = [pt[j], pt[i]]; // apply the same randomization to pt
+    }
+    this.tetrolinoes = t;
+    this.previewTetrolinos = pt;
+  }
+
   selectRandomTetrolino() {
     // randomly select a new color
     this.randomColor = this.nextRandomColor;
@@ -465,8 +483,8 @@ export class HomePage {
       if (row.every(index => this.squares_grid[index].classList.contains('solid'))) {
         this.specialTetrolinoMoveCounter++;   // count toward special tetrolino move
 
-        this.soundEffect = this.setAudio(this.clearLineAudio, 0.20);
-        this.soundEffect.play();
+        this.soundEffect_clearLine = this.setAudio(this.clearLineAudio, 0.20);
+        this.soundEffect_clearLine.play();
         this.linesCleared++;
         this.score += 10 + this.moveDownBonus;
         this.scoreDisplay.innerHTML = this.score;
@@ -672,6 +690,8 @@ export class HomePage {
         this.moveRight();
       } else if (e.key === 'ArrowUp') {     // up arrow
         this.rotate();
+      } else if (e.key === 'ArrowDowm') {   // down arrow
+        this.moveDown();
       } else if (e.key === 'Escape') {      // escape key
         this.gamePaused = !this.gamePaused;
         this.pauseGame(this.gamePaused);
@@ -890,7 +910,7 @@ export class HomePage {
           },
         },
         {
-          text: this.toggleTheme ? this.toggleTheme_DARK : this.toggleTheme_LIGHT,
+          text: this.toggleTheme ? this.toggleThemeString_DARK : this.toggleThemeString_LIGHT,
           handler: () => {
             this.handlerMessage = 'Setting theme...';
             this.toggleTheme = this.changeTheme(this.toggleTheme);
@@ -929,7 +949,7 @@ export class HomePage {
             await Browser.open({ url });
           },
         },
-        {
+        /*{
           text: 'Itch.io',
           handler: async () => {
             this.handlerMessage = 'Opening website...';
@@ -937,7 +957,7 @@ export class HomePage {
             const url = this.itchioURL;
             await Browser.open({ url });
           },
-        },
+        },*/
         {
           text: 'YouTube',
           handler: async () => {
@@ -963,6 +983,20 @@ export class HomePage {
             this.backgroundMusic.volume = this.normalVolume;
             const url = this.newsletterURL;
             await Browser.open({ url });
+          },
+        },
+        {
+          text: this.initializeGoogleAdmobAds ? this.toggleBannerAdString : '',
+          handler: () => {
+            if (this.initializeGoogleAdmobAds) {
+              this.handlerMessage = 'Toggle banner display...';
+              this.toggleBannerAd = !this.toggleBannerAd;
+              if (this.toggleBannerAd) this.hideBannerAd();
+              else this.resumeBannerAd();
+            }
+            if (!this.gamePaused) this.pauseGame(this.gamePaused);
+            this.backgroundMusic.volume = this.normalVolume;
+            this.backgroundMusic.playbackRate = this.normalPlaybackRate;
           },
         },
         {
@@ -1012,6 +1046,11 @@ export class HomePage {
   async hideBannerAd() {
     // hide banner, still available
     await AdMob.hideBanner();
+  }
+  
+  async resumeBannerAd() {
+    // show a hidden banner
+    await AdMob.resumeBanner();
   }
 
   async removeBannerAd() {
